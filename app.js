@@ -15,7 +15,8 @@ const tours = JSON.parse(
   fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`)
 );
 
-//ROUTES
+///////////////////////ROUTES//////////////////////
+//////GET
 app.get('/api/v1/tours', (req, res) => {
   res.status(200).json({
     status: 'success',
@@ -26,6 +27,7 @@ app.get('/api/v1/tours', (req, res) => {
   });
 });
 
+/////GET
 app.get('/api/v1/tours/:id', (req, res) => {
   const id = +req.params.id;
   const tour = tours.find((el) => el.id === id);
@@ -45,6 +47,7 @@ app.get('/api/v1/tours/:id', (req, res) => {
   });
 });
 
+/////POST
 app.post('/api/v1/tours', (req, res) => {
   // console.log(req.body);
   const newId = tours[tours.length - 1].id + 1;
@@ -65,6 +68,7 @@ app.post('/api/v1/tours', (req, res) => {
   );
 });
 
+/////PATCH
 app.patch('/api/v1/tours/:id', (req, res) => {
   const id = +req.params.id;
   const tour = tours.find((el) => el.id === id);
@@ -81,6 +85,23 @@ app.patch('/api/v1/tours/:id', (req, res) => {
     data: {
       tour: '<Updated tour here>',
     },
+  });
+});
+
+/////DELETE
+app.delete('/api/v1/tours/:id', (req, res) => {
+  const id = +req.params.id;
+  const tour = tours.find((el) => el.id === id);
+
+  if (!tour) {
+    return res.status(404).json({
+      status: 'fail',
+      message: 'Invalid ID',
+    });
+  }
+  res.status(204).json({
+    status: 'success',
+    data: null,
   });
 });
 
