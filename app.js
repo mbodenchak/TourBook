@@ -17,6 +17,12 @@ app.use((req, res, next) => {
   next();
 });
 
+//logs type of request and time sent .e.g: GET /api/v1/tours?duration=5&difficulty=easy 200 111.466 ms - 9387
+app.use((req, res, next) => {
+  req.requestTime = new Date().toISOString();
+  next();
+});
+
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/tours', tourRouter);
 
