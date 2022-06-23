@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
     required: [true, 'Please enter your email'],
     unique: true,
     lowercase: true,
-    validate: [validator.isEmail(), 'Please provide a valid email'],
+    validate: [validator.isEmail, 'Please provide a valid email'],
   },
   photo: {
     type: String,
@@ -28,6 +28,6 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-const User = mongoose.model('USer', userSchema);
+const User = mongoose.model('User', userSchema);
 
 module.exports = User;
