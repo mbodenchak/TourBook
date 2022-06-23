@@ -3,6 +3,7 @@ const Tour = require('./../models/tourModel');
 const APIFeatures = require('../utils/apiFeatures');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
+const mongoose = require('mongoose');
 ///////////////////////ROUTE HANDLERS//////////////////////
 ////ALIAS ROUTE (top 5 tours)
 exports.aliasTopTours = (req, res, next) => {
@@ -78,7 +79,7 @@ exports.updateTour = catchAsync(async (req, res, next) => {
 
 ////////////DELETE TOUR
 exports.deleteTour = catchAsync(async (req, res, next) => {
-  const tour = await Tour.findByIdandDelete(req.params.id);
+  const tour = await Tour.findByIdAndDelete(req.params.id);
   if (!tour) {
     return next(new AppError('No tour found with that ID', 404));
   }

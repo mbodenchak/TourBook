@@ -83,3 +83,16 @@ exports.protect = catchAsync(async (req, res, next) => {
   req.user = currentUser;
   next();
 });
+
+//using wrapper function with props (...roles) (which creates an array of what's provided e.g. ['admin', 'lead-guide']), and returns middleware function, which will have access to the ...roles
+exports.restrictTo = (...roles) => {
+  return (req, res, next) => {
+    //checks if the provided roles in the wrapper function includes the user's role in userdata
+    if (!roles.includes(req.user.role)) {
+      return next(
+        new AppError('You do not have permission to perform this action', 403)
+      );
+    }
+    next();
+  };
+};
