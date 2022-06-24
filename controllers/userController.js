@@ -14,7 +14,7 @@ const filterObj = (obj, ...allowedFields) => {
 exports.createUser = (req, res) => {
   res.status(500).json({
     status: 'error',
-    message: 'this route is not yet defined.',
+    message: 'this route is not yet defined, please use signup instead.',
   });
 };
 exports.getAllUsers = catchAsync(async (req, res, next) => {
@@ -61,11 +61,6 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getUserById = (req, res) => {
-  res.status(500).json({
-    status: 'error',
-    message: 'this route is not yet defined.',
-  });
-};
+exports.getUserById = factory.getOne(User);
 exports.updateUser = factory.updateOne(User);
 exports.deleteUser = factory.deleteOne(User);
