@@ -3,6 +3,7 @@ const Tour = require('./../models/tourModel');
 const APIFeatures = require('../utils/apiFeatures');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
+const factor = require('./handlerFactory');
 const mongoose = require('mongoose');
 ///////////////////////ROUTE HANDLERS//////////////////////
 ////ALIAS ROUTE (top 5 tours)
@@ -36,7 +37,7 @@ exports.getAllTours = catchAsync(async (req, res, next) => {
 
 /////GET TOUR BY ID
 exports.getTourById = catchAsync(async (req, res, next) => {
-  const tour = await Tour.findById(req.params.id);
+  const tour = await Tour.findById(req.params.id).populate('reviews');
 
   if (!tour) {
     return next(new AppError('No tour found with that ID', 404));
@@ -78,16 +79,7 @@ exports.updateTour = catchAsync(async (req, res, next) => {
 });
 
 ////////////DELETE TOUR
-exports.deleteTour = catchAsync(async (req, res, next) => {
-  const tour = await Tour.findByIdAndDelete(req.params.id);
-  if (!tour) {
-    return next(new AppError('No tour found with that ID', 404));
-  }
-  res.status(204).json({
-    status: 'success',
-    data: null,
-  });
-});
+exports.deleteTour = factor.deleteOne(Tour);
 
 ///////GET TOUR STATISTICS
 
