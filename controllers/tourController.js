@@ -3,7 +3,7 @@ const Tour = require('./../models/tourModel');
 const APIFeatures = require('../utils/apiFeatures');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
-const factor = require('./handlerFactory');
+const factory = require('./handlerFactory');
 const mongoose = require('mongoose');
 ///////////////////////ROUTE HANDLERS//////////////////////
 ////ALIAS ROUTE (top 5 tours)
@@ -52,34 +52,11 @@ exports.getTourById = catchAsync(async (req, res, next) => {
 });
 
 //////////////POST TOUR
-exports.createTour = catchAsync(async (req, res, next) => {
-  const newTour = await Tour.create(req.body);
-  res.status(201).json({
-    status: 'success',
-    data: {
-      tour: newTour,
-    },
-  });
-});
+exports.createTour = factory.createOne(Tour);
 //////////UPDATE TOUR
-exports.updateTour = catchAsync(async (req, res, next) => {
-  const tour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-  });
-  if (!tour) {
-    return next(new AppError('No tour found with that ID', 404));
-  }
-  res.status(200).json({
-    status: 'success',
-    data: {
-      tour,
-    },
-  });
-});
-
+exports.updateTour = factory.updateOne(Tour);
 ////////////DELETE TOUR
-exports.deleteTour = factor.deleteOne(Tour);
+exports.deleteTour = factory.deleteOne(Tour);
 
 ///////GET TOUR STATISTICS
 
