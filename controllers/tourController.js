@@ -14,15 +14,10 @@ exports.aliasTopTours = (req, res, next) => {
   next();
 };
 
-////GET ALL TOURS
 exports.getAllTours = factory.getAll(Tour);
-////GET TOUR BY ID
 exports.getTourById = factory.getOne(Tour, { path: 'reviews' });
-////POST TOUR
 exports.createTour = factory.createOne(Tour);
-////UPDATE TOUR
 exports.updateTour = factory.updateOne(Tour);
-////DELETE TOUR
 exports.deleteTour = factory.deleteOne(Tour);
 
 ///////GET TOUR STATISTICS
